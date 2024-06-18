@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: large_bodies
+    description: "Table with Star, Planets, Dwarf Planets and Moons"
+    columns:
+      - name: ID
+        tests:
+          - unique
+          - not_null
+      - name: TYPE
+        tests:
+          - not_null
+      - name: NAME
+        tests:
+          - not_null
+      - name: MEAN_RADIUS
+      - name: SEMIMAJOR_ORBIT
+      - name: PLANETARY_SYSTEM

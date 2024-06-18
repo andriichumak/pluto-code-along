@@ -1,0 +1,36 @@
+id: planet_sizes
+type: column_chart
+
+query:
+  fields:
+    radius:
+      title: Mean Radius, km
+      using: fact/radius
+      aggregation: SUM
+    name: label/name
+
+  filter_by:
+    - type: attribute_filter
+      using: label/name
+      state:
+        include:
+         - Jupiter
+         - Earth
+         - Mars
+         - Venus
+         - Saturn
+         - Uranus
+         - Neptune
+         - Pluto
+         - Mercury
+  sort_by:
+    - type: metric_sort
+      metrics:
+       - radius
+      direction: DESC
+
+metrics:
+  - radius
+
+view_by:
+  - name

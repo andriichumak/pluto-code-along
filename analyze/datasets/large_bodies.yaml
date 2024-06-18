@@ -1,0 +1,35 @@
+type: dataset
+id: large_bodies
+table_path: PLUTO_CODE_ALONG/LARGE_BODIES
+
+title: Large Solar System Bodies
+
+primary_key: large_body
+
+fields:
+  large_body:
+    type: attribute
+    source_column: ID
+    data_type: STRING
+    labels:
+      name:
+        source_column: NAME
+        data_type: STRING
+        value_type: TEXT
+  type:
+    type: attribute
+    source_column: TYPE
+    data_type: STRING
+  radius:
+    type: fact
+    source_column: MEAN_RADIUS
+    data_type: NUMERIC
+  orbital_distance:
+    type: fact
+    source_column: SEMIMAJOR_ORBIT
+    data_type: NUMERIC
+  planetary_system:
+    type: attribute
+    source_column: PLANETARY_SYSTEM
+    data_type: STRING
+  

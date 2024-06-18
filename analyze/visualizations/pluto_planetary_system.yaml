@@ -1,0 +1,34 @@
+id: pluto_planetary_system
+type: bar_chart
+
+title: Pluto Planetary System
+
+query:
+  fields:
+    radius:
+      title: Mean Radius, km
+      using: fact/radius
+      aggregation: SUM
+    name: label/name
+
+  filter_by:
+    - type: attribute_filter
+      using: label/planetary_system
+      state:
+        include:
+          - Pluto
+    - type: ranking_filter
+      using: radius
+      top: 10
+
+metrics:
+  - field: radius
+    format: "#.##0"
+
+view_by:
+  - name
+
+config:
+  colors:
+    radius: 7
+  yaxis_name_visible: false

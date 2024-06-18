@@ -1,0 +1,33 @@
+name: Deploy Analytics
+
+on:
+  workflow_dispatch:
+   inputs:
+      environment:
+        description: 'Profile'
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up NodeJS
+      uses: actions/setup-node@v4
+    - name: Install dependencies
+      run: npm ci
+    - name: Add .env
+      run: |
+        touch .env
+        echo "TARGET_SNOWFLAKE_PASSWORD='${{ secrets.SNOWFLAKE_PWD }}'" >> .env
+        echo "DBT_SNOWFLAKE_PASSWORD='${{ secrets.SNOWFLAKE_PWD }}'" >> .env
+        echo "GOODDATA_API_TOKEN='${{ secrets.GD_DEV_TOKEN }}'" >> .env
+        echo "GOODDATA_API_TOKEN_DEMO='${{ secrets.GD_DEMO_TOKEN }}'" >> .env
+    - name: Deploy
+      run: npx gd deploy --profile ${{ inputs.profile }}

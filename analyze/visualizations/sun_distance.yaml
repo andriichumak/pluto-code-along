@@ -1,0 +1,30 @@
+id: sun_distance
+type: scatter_chart
+
+query:
+  fields:
+    name: label/name
+    distance:
+      using: fact/orbital_distance
+      aggregation: SUM
+  
+  filter_by:
+    - type: attribute_filter
+      using: label/name
+      state:
+        include:
+         - Jupiter
+         - Earth
+         - Mars
+         - Venus
+         - Saturn
+         - Uranus
+         - Neptune
+         - Pluto
+         - Mercury
+
+metrics:
+  - distance
+
+view_by:
+  - name

@@ -1,0 +1,44 @@
+version: 1
+default_environment: dev
+project_id: e86d2610-db40-4cf5-87cb-fc706b1a31f2
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-rest-api-msdk
+    variant: widen
+    pip_url: tap-rest-api-msdk
+    config:
+      api_url: https://api.le-systeme-solaire.net/rest
+      streams:
+      - name: bodies
+        path: /bodies/
+        primary_keys: [id]
+        records_path: $.bodies[*]
+        schema: ./bodies_schema.json
+    select:
+    - '*.*'
+  loaders:
+  - name: target-snowflake
+    variant: meltanolabs
+    pip_url: meltanolabs-target-snowflake
+    config:
+      account: gooddata
+      warehouse: DEMO_WH
+      user: ANDY
+      role: ANDY_ROLE
+      database: ANDY
+      schema: PLUTO_CODE_ALONG
+  utilities:
+  - name: dbt-snowflake
+    variant: dbt-labs
+    pip_url: dbt-core dbt-snowflake git+https://github.com/meltano/dbt-ext.git@main
+    config:
+      account: gooddata
+      warehouse: DEMO_WH
+      user: ANDY
+      role: ANDY_ROLE
+      database: ANDY
+      schema: PLUTO_CODE_ALONG
